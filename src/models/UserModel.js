@@ -1,7 +1,8 @@
+// UserModel.js
 const { DataTypes } = require('sequelize');
-const db = require('../database/db.config.js');
+const { sequelize } = require('../database/db.config.js');
 
-const User = db.sequelize.define('User', {
+const UserModel = sequelize.define('User', {
   nome: {
     type: DataTypes.STRING,
     allowNull: false,
@@ -17,10 +18,12 @@ const User = db.sequelize.define('User', {
   },
 });
 
-User.sync().then(() => {
-  console.log('Modelo User sincronizado com o banco de dados.');
-}).catch((err) => {
-  console.error('Erro ao sincronizar modelo User:', err);
-});
+UserModel.sync()
+  .then(() => {
+    console.log("Modelo User sincronizado com o banco de dados.");
+  })
+  .catch((err) => {
+    console.error("Erro ao sincronizar modelo User:", err);
+  });
 
-module.exports = User;
+module.exports = UserModel;

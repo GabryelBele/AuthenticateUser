@@ -1,0 +1,8 @@
+class CreateTelefoneDTO {
+  constructor(numero, ddd) {
+    this.numero = numero;
+    this.ddd = ddd;
+  }
+}
+
+module.exports = CreateTelefoneDTO;

@@ -1,7 +1,9 @@
+// TelefoneModel.js
 const { DataTypes } = require('sequelize');
-const db = require('../database/db.config.js');
+const { sequelize } = require('../database/db.config.js');
+const UserModel = require('./UserModel.js');
 
-const Telefone = db.sequelize.define('Telefone', {
+const TelefoneModel = sequelize.define('Telefone', {
   numero: {
     type: DataTypes.STRING,
     allowNull: false,
@@ -12,11 +14,14 @@ const Telefone = db.sequelize.define('Telefone', {
   },
 });
 
-// Sincronização do modelo com o banco de dados
-Telefone.sync().then(() => {
-  console.log('Modelo Telefone sincronizado com o banco de dados.');
-}).catch((err) => {
-  console.error('Erro ao sincronizar modelo Telefone:', err);
-});
+TelefoneModel.belongsTo(UserModel);
 
-module.exports = Telefone;
+TelefoneModel.sync()
+  .then(() => {
+    console.log("Modelo Telefone sincronizado com o banco de dados.");
+  })
+  .catch((err) => {
+    console.error("Erro ao sincronizar modelo Telefone:", err);
+  });
+
+module.exports = TelefoneModel;
