@@ -1,6 +1,7 @@
 import userService from '../services/UserService.js';
 
 class UserController {
+
   async createUser(req, res) {
     try {
       const body = req.body
@@ -21,6 +22,19 @@ class UserController {
       res.status(500).json({ error: 'Erro ao criar usuário' });
     }
   }
+
+  async findByIdUserController(req, res) {
+    const userId = req.params.id;
+    const userIdLogged = req.userId;
+  
+    try {
+      const user = await userService.findUserByIdService(userId, userIdLogged);
+      return res.send(user);
+    } catch (error) {
+      res.status(400).send(error.message);
+    }
+  }
+  
 }
 
 export default new UserController();

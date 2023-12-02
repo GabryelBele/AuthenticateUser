@@ -1,7 +1,6 @@
-import User from "../models/UserModel.js";
-import Telefone from "../models/TelefoneModel.js";
 import AuthService from "./AuthService.js";
 import bcrypt from "bcrypt";
+import UserRepository from "../repositories/UserRepository.js";
 
 class UserService {
 
@@ -29,14 +28,10 @@ class UserService {
 
     try {
       const hashedPassword = await bcrypt.hash(password, 10);
-      const user = await User.create({ nome, email, password: hashedPassword });
+      
+      const user = await UserRepository.createUser(nome, email, hashedPassword);
 
-      const telefoneData = telefones.map((tel) => ({
-        ...tel,
-        UserId: user.id,
-      }));
-
-      await Telefone.bulkCreate(telefoneData);
+      await UserRepository.createTelefones(telefones, user.id);
 
       const token = AuthService.generateToken(user.id);
 
@@ -44,7 +39,7 @@ class UserService {
         id: user.id,
         data_criacao: user.createdAt,
         data_atualizacao: user.updatedAt,
-        ultimo_login: "2023-12-01T00:00:00.000Z",
+        ultimo_login: new Date().toISOString(),
         token: token,
       };
 
@@ -55,22 +50,23 @@ class UserService {
   }
 
   async findUserByIdService(userIdParam, userIdLogged) {
-    let idParam;
-    if (!userIdParam) {
-      userIdParam = userIdLogged;
-      idParam = userIdParam;
-    } else {
-      idParam = userIdParam;
-    }
-    if (!idParam)
+    const idParam = userIdParam || userIdLogged;
+  
+    if (!idParam) {
       throw new Error("Send an id in the parameters to search for the user");
+    }
   
-    const user = await userRepositories.findByIdUserRepository(idParam);
+    const user = await UserRepository.findByIdUserRepository(idParam);
   
-    if (!user) throw new Error("User not found");
+    if (!user) {
+      throw new Error("User not found");
+    }
   
     return user;
   }
+
 }
 
 export default new UserService();
+
+
