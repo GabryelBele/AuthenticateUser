@@ -18,8 +18,7 @@ class UserController {
 
       res.status(201).json(responseData);
     } catch (error) {
-      console.error('Erro ao criar usuário:', error);
-      res.status(500).json({ error: 'Erro ao criar usuário' });
+      res.status(500).json({error: error.message});
     }
   }
 

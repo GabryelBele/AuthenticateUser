@@ -5,4 +5,4 @@ class CreateTelefoneDTO {
   }
 }
 
-module.exports = CreateTelefoneDTO;
+export default CreateTelefoneDTO;

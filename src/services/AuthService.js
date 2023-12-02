@@ -2,26 +2,31 @@ import jwt from "jsonwebtoken";
 import bcrypt from "bcrypt";
 import "dotenv/config";
 import AuthRepository from "../repositories/AuthRepository.js";
+import authMiddleware from "../middlewares/auth.middlewares.js";
 
-const generateToken = (id) =>
-  jwt.sign({ id: id }, process.env.SECRET_JWT, { expiresIn: 1800 });
+class AuthService {
 
-const loginService = async (body) => {
-  const { email, password } = body;
+  generateToken(id) {
+    jwt.sign({ id: id }, process.env.SECRET_JWT, { expiresIn: 1800 });
+  }
 
-  if (!email || !password) throw new Error("Wrong password or username");
+  async loginService(body) {
+    const { email, password } = body;
 
-  const user = await AuthRepository.loginRepository(email);
+    if (!email || !password) throw new Error("Email ou Senha Inválidos");
 
-  if (!user) throw new Error("Wrong password or username");
+    const user = await AuthRepository.loginRepository(email);
 
-  const isPasswordValid = await bcrypt.compare(password, user.password);
+    if (!user) throw new Error("Email ou Senha Inválidos");
 
-  if (!isPasswordValid) throw new Error("Invalid password");
+    const isPasswordValid = await bcrypt.compare(password, user.password);
 
-  const token = generateToken(user.id);
+    if (!isPasswordValid) throw new Error("Email ou Senha inválidos");
 
-  return token;
-};
+    const token = this.generateToken(user.id);
 
-export default { loginService, generateToken };
+    return token;
+  };
+}
+
+export default new AuthService();

@@ -31,6 +31,15 @@ class UserRepository {
       throw new Error("Error creating telefones in the repository:", error);
     }
   }
+
+  async findUserByEmail(email) {
+    try {
+      const user = await User.findOne({ where: { email: email } });
+      return user;
+    } catch (error) {
+      throw new Error('Erro ao buscar usuário por e-mail:', error);
+    }
+  }
 }
 
 export default new UserRepository();

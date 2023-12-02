@@ -4,7 +4,7 @@ import UserRepository from "../repositories/UserRepository.js";
 
 class UserService {
 
-  async createUserWithTelefones(body) {
+  async createUserWithTelefones(body){
     const { nome, email, password, telefones } = body;
 
     if (!nome || !email || !password || !telefones) {
@@ -25,9 +25,12 @@ class UserService {
         throw new Error('Cada telefone deve conter um número e um DDD.');
       }
     }
-
-    try {
       const hashedPassword = await bcrypt.hash(password, 10);
+
+      const userExists = await UserRepository.findUserByEmail(email);
+      if (userExists) {
+        throw new Error('E-mail já cadastrado');
+      }
       
       const user = await UserRepository.createUser(nome, email, hashedPassword);
 
@@ -44,9 +47,6 @@ class UserService {
       };
 
       return response;
-    } catch (error) {
-      throw new Error("Erro ao criar usuário com telefones:", error);
-    }
   }
 
   async findUserByIdService(userIdParam, userIdLogged) {

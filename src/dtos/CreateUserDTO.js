@@ -7,5 +7,5 @@ class CreateUserDTO {
     }
   }
   
-  module.exports = CreateUserDTO;
+  export default CreateUserDTO;
   
