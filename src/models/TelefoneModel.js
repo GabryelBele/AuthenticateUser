@@ -1,7 +1,7 @@
 // TelefoneModel.js
-const { DataTypes } = require('sequelize');
-const { sequelize } = require('../database/db.config.js');
-const UserModel = require('./UserModel.js');
+import { DataTypes } from 'sequelize';
+import sequelize  from '../database/db.config.js';
+import UserModel from './UserModel.js';
 
 const TelefoneModel = sequelize.define('Telefone', {
   numero: {
@@ -24,4 +24,4 @@ TelefoneModel.sync()
     console.error("Erro ao sincronizar modelo Telefone:", err);
   });
 
-module.exports = TelefoneModel;
+export default TelefoneModel;

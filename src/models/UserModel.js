@@ -1,6 +1,5 @@
-// UserModel.js
-const { DataTypes } = require('sequelize');
-const { sequelize } = require('../database/db.config.js');
+import { DataTypes } from 'sequelize';
+import sequelize from '../database/db.config.js';
 
 const UserModel = sequelize.define('User', {
   nome: {
@@ -26,4 +25,4 @@ UserModel.sync()
     console.error("Erro ao sincronizar modelo User:", err);
   });
 
-module.exports = UserModel;
+export default UserModel;

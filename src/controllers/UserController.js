@@ -1,30 +1,11 @@
-const UserService = require('../services/UserService.js');
+import userService from '../services/UserService.js';
 
 class UserController {
   async createUser(req, res) {
     try {
-      const { nome, email, password, telefones } = req.body;
+      const body = req.body
 
-      if (!nome || !email || !password || !telefones) {
-        return res.status(400).json({ error: 'Por favor, forneça todos os campos obrigatórios.' });
-      }
-
-      const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-      if (!emailRegex.test(email)) {
-        return res.status(400).json({ error: 'O email fornecido não é válido.' });
-      }
-
-      if (!Array.isArray(telefones) || telefones.length === 0) {
-        return res.status(400).json({ error: 'Por favor, forneça ao menos um telefone.' });
-      }
-
-      for (const telefone of telefones) {
-        if (!telefone.numero || !telefone.ddd) {
-          return res.status(400).json({ error: 'Cada telefone deve conter um número e um DDD.' });
-        }
-      }
-
-      const createdUser = await UserService.createUserWithTelefones(nome, email, password, telefones);
+      const createdUser = await userService.createUserWithTelefones(body);
 
       const responseData = {
         id: createdUser.id,
@@ -42,4 +23,4 @@ class UserController {
   }
 }
 
-module.exports = new UserController();
+export default new UserController();

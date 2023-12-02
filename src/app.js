@@ -1,8 +1,8 @@
-require("dotenv").config();
-const { testConnection } = require("./database/db.config");
-const User = require("./models/UserModel.js");
-const Telefone = require("./models/TelefoneModel.js");
-const Routes = require("./routes/routes.js");
+import dotenv from 'dotenv';
+dotenv.config();
+import { testConnection } from "./database/db.config.js";
+import express from "express";
+import Routes from "./routes/routes.js";
 
 testConnection()
   .then(() => {
@@ -13,13 +13,12 @@ testConnection()
   });
 
 function startServer() {
-  const express = require("express");
   const app = express();
   const PORT = process.env.PORT || 3000;
 
   app.use(express.json());
 
-  app.use("/api", Routes);
+  app.use(Routes);
 
   app.listen(PORT, () => {
     console.log(`Servidor rodando na porta ${PORT}`);
