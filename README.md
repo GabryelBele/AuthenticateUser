@@ -1,5 +1,6 @@
 # API de Autenticação de Usuários
 
+**Dentro da coleção do postman, acesse o ícone "import" e cole a url abaixo**
 **Coleção do Postman dessa api: https://api.postman.com/collections/29971967-136b5c8e-7b1a-4963-9417-25e33f10970e?access_key=PMAT-01HGRER72PP61QBFG0SPJ8EYAY**
 
 ### 1. Sign Up (Criação de Cadastro)
