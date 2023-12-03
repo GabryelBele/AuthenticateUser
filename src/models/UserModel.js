@@ -1,4 +1,3 @@
-// UserModel.js
 import { DataTypes } from 'sequelize';
 import sequelize from '../database/db.config.js';
 
@@ -18,13 +17,12 @@ const UserModel = sequelize.define('User', {
   },
 });
 
-export const syncUserModel = async () => {
-  try {
-    await UserModel.sync();
+UserModel.sync()
+  .then(() => {
     console.log("Modelo User sincronizado com o banco de dados.");
-  } catch (err) {
+  })
+  .catch((err) => {
     console.error("Erro ao sincronizar modelo User:", err);
-  }
-};
+  });
 
 export default UserModel;
