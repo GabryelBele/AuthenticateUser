@@ -3,6 +3,16 @@ dotenv.config();
 import { testConnection } from "./database/db.config.js";
 import express from "express";
 import Routes from "./routes/routes.js";
+import { syncTelefoneModel } from './models/TelefoneModel.js';
+
+syncTelefoneModel()
+  .then(() => {
+    console.log("Modelos sincronizados. Inicializando o servidor...");
+  })
+  .catch((err) => {
+    console.error("Erro ao sincronizar modelos:", err);
+  });
+
 
 testConnection()
   .then(() => {

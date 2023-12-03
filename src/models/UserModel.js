@@ -17,12 +17,14 @@ const UserModel = sequelize.define('User', {
   },
 });
 
-UserModel.sync()
-  .then(() => {
-    console.log("Modelo User sincronizado com o banco de dados.");
-  })
-  .catch((err) => {
-    console.error("Erro ao sincronizar modelo User:", err);
-  });
+export const syncUserModel = () => {
+  return UserModel.sync()
+    .then(() => {
+      console.log("Modelo User sincronizado com o banco de dados.");
+    })
+    .catch((err) => {
+      console.error("Erro ao sincronizar modelo User:", err);
+    });
+};
 
 export default UserModel;
