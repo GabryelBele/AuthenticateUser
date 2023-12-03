@@ -29,7 +29,7 @@ class UserService {
 
       const userExists = await UserRepository.findUserByEmail(email);
       if (userExists) {
-        throw new Error('E-mail já cadastrado');
+        throw new Error('E-mail já existente');
       }
       
       const user = await UserRepository.createUser(nome, email, hashedPassword);
@@ -53,7 +53,7 @@ class UserService {
     const idParam = userIdParam || userIdLogged;
   
     if (!idParam) {
-      throw new Error("Send an id in the parameters to search for the user");
+      throw new Error("Sessão não autorizada");
     }
   
     const user = await UserRepository.findByIdUserRepository(idParam);

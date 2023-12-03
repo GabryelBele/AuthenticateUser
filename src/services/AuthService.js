@@ -9,15 +9,15 @@ const generateToken = (id) =>
 const loginService = async (body) => {
   const { email, password } = body;
 
-  if (!email || !password) throw new Error("Wrong password or username");
+  if (!email || !password) throw new Error("Email e/ou Senha inválidos");
 
   const user = await AuthRepository.loginRepository(email);
 
-  if (!user) throw new Error("Wrong password or username");
+  if (!user) throw new Error("Email e/ou Senha inválidos");
 
   const isPasswordValid = await bcrypt.compare(password, user.password);
 
-  if (!isPasswordValid) throw new Error("Invalid password");
+  if (!isPasswordValid) throw new Error("Email e/ou Senha inválidos");
 
   const token = generateToken(user.id);
 

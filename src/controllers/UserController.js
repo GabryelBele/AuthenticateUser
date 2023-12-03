@@ -18,7 +18,7 @@ class UserController {
 
       res.status(201).json(responseData);
     } catch (error) {
-      res.status(500).json({error: error.message});
+      res.status(400).json({error: error.message});
     }
   }
 
@@ -30,7 +30,7 @@ class UserController {
       const user = await userService.findUserByIdService(userId, userIdLogged);
       return res.send(user);
     } catch (error) {
-      res.status(400).send(error.message);
+      res.status(403).send(error.message);
     }
   }
   
