@@ -12,7 +12,7 @@ module.exports = {
       "sourceType": "module"
     },
     "plugins": [
-      "dotenv-eslint"  // Adicione o plugin dotenv-eslint
+      "dotenv-eslint"
     ],
     "overrides": [
       {
